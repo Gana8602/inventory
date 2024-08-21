@@ -38,6 +38,8 @@ class MenuController extends GetxController {
         return customIcon(Icons.exit_to_app, itemName);
       case pendingWorkDisplayName:
         return customIcon(CupertinoIcons.exclamationmark_circle_fill, itemName);
+      case TrashDisplayName:
+        return customIcon(Icons.delete, itemName);
       default:
         return customIcon(Icons.exit_to_app, itemName);
     }

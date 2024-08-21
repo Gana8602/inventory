@@ -34,6 +34,12 @@ class InventoryController extends GetxController {
     "GeoEngineering",
     "Office"
   ];
+  List<Map<String, dynamic>> categories = [
+    {"Mc": "GeoScience", "C": "Electrical,Mechanical,IT"},
+    {"Mc": "GeoInformatics", "C": "Electrical,Mechanical,IT"},
+    {"Mc": "GeoEngineering", "C": "Electrical,Mechanical,IT"},
+    {"Mc": "Office", "C": "Office"}
+  ];
 
   RxString selectedCategory = "Electrical".obs;
   List<String> categoriesList = ["Electrical", "Mechanical", "IT", "Office"];

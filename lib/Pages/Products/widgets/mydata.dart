@@ -1,7 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable, avoid_print
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:inventory/Widgets/elevated_button.dart';
 import 'package:inventory/api_services/api_config.dart';
 
 import '../../../Widgets/custom_text.dart';
@@ -40,6 +43,7 @@ class MyData extends DataTableSource {
 
   DataCell _buildActionsCell(BuildContext context,
       ProductsController controller, Map<String, dynamic> product) {
+    String? msg;
     return DataCell(Row(
       children: [
         IconButton(
@@ -52,8 +56,32 @@ class MyData extends DataTableSource {
         IconButton(
           icon: const Icon(Icons.delete),
           color: Colors.redAccent,
-          onPressed: () {
-            _deleteProduct(product['id'].toString(), product["main_category"]);
+          onPressed: () async {
+            bool status = await _deleteProduct(
+                product['id'].toString(), product["main_category"]);
+
+            if (status) {
+              msg = "Product removed successfully";
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(msg!),
+                  Button(
+                      onPressed: () async {
+                        msg = "Product Undo Successfully";
+                        bool status = await _undo(
+                            product['id'], product['main_category']);
+                        if (status) {
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Product Undo Successfully")));
+                        }
+                      },
+                      text: "Undo")
+                ],
+              )));
+            }
           },
         ),
       ],
@@ -186,12 +214,73 @@ class MyData extends DataTableSource {
     }
   }
 
-  Future<void> _deleteProduct(String id, String category) async {
-    const String url = '${ApiConfig.baseUrl}${ApiConfig.deleteProduct}';
+  Future<bool> _deleteProduct(String id, String category) async {
+    print(id);
+    print(category);
+    try {
+      var response = await http.post(
+        Uri.parse("${ApiConfig.baseUrl}${ApiConfig.deleteProduct}"),
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: {
+          'id': id,
+          'category': category,
+        },
+      );
 
-    var response = await http.get(Uri.parse('$url?id=$id&category=$category'));
-    if (response.statusCode == 200) {
-      controller.fetchListProducts();
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var data = jsonDecode(response.body);
+          print(data);
+          controller.fetchListProducts();
+          return true;
+        } else {
+          print('Empty response from the server');
+          return false;
+        }
+      } else {
+        print('Failed to delete product. Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false;
+    }
+  }
+
+  Future<bool> _undo(String id, String category) async {
+    print(id);
+    print(category);
+    try {
+      var response = await http.post(
+        Uri.parse("${ApiConfig.baseUrl}${ApiConfig.undo}"),
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: {
+          'id': id,
+          'category': category,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          var data = jsonDecode(response.body);
+          print(data);
+          controller.fetchListProducts();
+          return true;
+        } else {
+          print('Empty response from the server');
+          return false;
+        }
+      } else {
+        print('Failed to delete product. Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false;
     }
   }
 

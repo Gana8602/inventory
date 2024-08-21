@@ -90,7 +90,7 @@ class SideMenu extends StatelessWidget {
                 .toList(),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 8,
+            height: MediaQuery.of(context).size.height / 15,
           ),
           Expanded(child: const InformationWarning()),
           SideMenuItem(
@@ -99,7 +99,14 @@ class SideMenu extends StatelessWidget {
               menuController.changeActiveItemTo(pendingWorkDisplayName);
               navigationController.navigateTo(PendingtaskRoute);
             },
-          )
+          ),
+          SideMenuItem(
+            itemName: TrashDisplayName,
+            onTap: () {
+              menuController.changeActiveItemTo(TrashDisplayName);
+              navigationController.navigateTo(trashRoute);
+            },
+          ),
         ],
       ),
     );

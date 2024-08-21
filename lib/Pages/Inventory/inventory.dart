@@ -22,8 +22,13 @@ class InventoryPage extends StatefulWidget {
   final String token;
   final String name;
   final String qty;
+  final String vendor;
   const InventoryPage(
-      {super.key, required this.name, required this.qty, required this.token});
+      {super.key,
+      required this.name,
+      required this.qty,
+      required this.token,
+      required this.vendor});
 
   @override
   State<InventoryPage> createState() => _InventoryPageState();
@@ -41,6 +46,7 @@ class _InventoryPageState extends State<InventoryPage> {
     super.initState();
     inventoryController.nameController.text = widget.name;
     inventoryController.qtyController.text = widget.qty;
+    inventoryController.vendorNameController.text = widget.vendor;
   }
 
   @override

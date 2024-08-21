@@ -24,6 +24,9 @@ const dispatchPageRoute = '/dispatch';
 const pendingWorkDisplayName = "Pending Task";
 const PendingtaskRoute = '/pending';
 
+const TrashDisplayName = "Trash";
+const trashRoute = '/trash';
+
 class MenuItem {
   final String name;
   final String route;

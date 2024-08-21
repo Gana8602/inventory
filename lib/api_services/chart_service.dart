@@ -10,30 +10,29 @@ import 'api_config.dart';
 
 class ChartController extends GetxController {
   var data = <SalesData>[].obs;
-  final DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+  final DateFormat dateFormat = DateFormat('yyyy-MM-dd'); // Updated format
   var isLoading = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchChartData();
-  }
 
   Future<void> fetchChartData() async {
     try {
-      isLoading.value = true;
+      print("start");
 
       final response = await http
           .get(Uri.parse('${ApiConfig.baseUrl}${ApiConfig.chartData}'));
 
+      print("mid");
+      print(response.body);
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = json.decode(response.body);
 
+        // Convert JSON data to a list of SalesData objects
         data.value = jsonData.map((item) {
-          final date = DateTime.parse(item['date']);
+          // Parse the date using the correct format
+          final date = dateFormat.parse(item['date']);
           final qty = item['qty'];
-          final name = item['name'] ?? 'Unknown';
+          final name = item['main_category'] ?? 'Unknown';
 
+          // Ensure quantity is parsed as double
           return SalesData(
               date, qty is int ? qty.toDouble() : double.parse(qty), name);
         }).toList();
@@ -42,16 +41,14 @@ class ChartController extends GetxController {
       }
     } catch (e) {
       print('Error fetching chart data: $e');
-    } finally {
-      isLoading.value = false;
     }
   }
 }
 
 class SalesData {
-  SalesData(this.date, this.qty, this.name);
+  SalesData(this.date, this.qty, this.category);
 
   final DateTime date;
   final double qty;
-  final String name;
+  final String category;
 }

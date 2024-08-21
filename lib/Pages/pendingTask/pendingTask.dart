@@ -63,8 +63,10 @@ class _PendingtaskState extends State<Pendingtask> {
                               ? InkWell(
                                   onTap: () async {
                                     Map<String, dynamic>? data =
-                                        await showSheet(box[index].products,
-                                            box[index].token);
+                                        await showSheet(
+                                            box[index].products,
+                                            box[index].token,
+                                            box[index].supplierName);
 
                                     if (data!.isNotEmpty) {
                                       Navigator.of(context).push(
@@ -74,6 +76,7 @@ class _PendingtaskState extends State<Pendingtask> {
                                                     name: data['name'],
                                                     token: data['token'],
                                                     qty: data['qty'],
+                                                    vendor: data['vendor'],
                                                   )));
                                     }
                                   },
@@ -94,7 +97,7 @@ class _PendingtaskState extends State<Pendingtask> {
   }
 
   Future<Map<String, dynamic>?> showSheet(
-      List<Produc> product, String token) async {
+      List<Produc> product, String token, String vendorr) async {
     int? isSelected;
     final Map<String, dynamic> data = {};
 
@@ -177,6 +180,7 @@ class _PendingtaskState extends State<Pendingtask> {
                                   'token': token,
                                   'name': product[isSelected!].name,
                                   'qty': product[isSelected!].qty,
+                                  'vendor': vendorr
                                 });
                                 Get.back(
                                     result:

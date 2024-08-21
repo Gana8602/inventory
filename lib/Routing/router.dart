@@ -7,6 +7,7 @@ import 'package:inventory/Pages/Inventory/add_box.dart';
 import 'package:inventory/Pages/Inventory/inventory.dart';
 import 'package:inventory/Pages/Overview/overview.dart';
 import 'package:inventory/Pages/Products/products.dart';
+import 'package:inventory/Pages/trash/trash.dart';
 import 'package:inventory/Routing/routes.dart';
 
 import '../Pages/pendingTask/pendingTask.dart';
@@ -29,6 +30,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getPageRoute(DispatchPage());
     case PendingtaskRoute:
       return getPageRoute(const Pendingtask());
+    case trashRoute:
+      return getPageRoute(const TrashPage());
     default:
       return getPageRoute(const OverViewPage());
   }

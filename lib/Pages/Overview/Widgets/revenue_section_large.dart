@@ -51,44 +51,44 @@ class RevenueSectionLarge extends StatelessWidget {
                       SizedBox(height: 350, child: Chart())
                     ],
                   )),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          children: [
-                            RevenueInfo(
-                              title: "Today's revenue",
-                              amount: revenueService.revenue.value.today
-                                  .toStringAsFixed(2),
-                            ),
-                            RevenueInfo(
-                              title: "Last 7 days",
-                              amount: revenueService.revenue.value.last7Days
-                                  .toStringAsFixed(2),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            RevenueInfo(
-                              title: "Last 30 days",
-                              amount: revenueService.revenue.value.last30Days
-                                  .toStringAsFixed(2),
-                            ),
-                            RevenueInfo(
-                              title: "Last 12 months",
-                              amount: revenueService.revenue.value.last12Months
-                                  .toStringAsFixed(2),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           RevenueInfo(
+                  //             title: "Today's revenue",
+                  //             amount: revenueService.revenue.value.today
+                  //                 .toStringAsFixed(2),
+                  //           ),
+                  //           RevenueInfo(
+                  //             title: "Last 7 days",
+                  //             amount: revenueService.revenue.value.last7Days
+                  //                 .toStringAsFixed(2),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       const SizedBox(
+                  //         height: 30,
+                  //       ),
+                  //       Row(
+                  //         children: [
+                  //           RevenueInfo(
+                  //             title: "Last 30 days",
+                  //             amount: revenueService.revenue.value.last30Days
+                  //                 .toStringAsFixed(2),
+                  //           ),
+                  //           RevenueInfo(
+                  //             title: "Last 12 months",
+                  //             amount: revenueService.revenue.value.last12Months
+                  //                 .toStringAsFixed(2),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             );
